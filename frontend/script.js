@@ -2,7 +2,7 @@ const todoForm = document.getElementById('todo-form');
 const todoInput = document.getElementById('todo-input');
 const todoList = document.getElementById('todo-list');
 
-const API_URL = 'http://localhost:8080/api'; // Replace with your deployed backend URL
+const API_URL = 'https://47d6f5f8-80c4-4937-ad73-b962f0fa0c53-dev.e1-us-east-azure.choreoapis.dev/todochoreoapp/todo-backend-service/v1.0';
 
 // Fetch todos from the backend
 async function getTodos() {
