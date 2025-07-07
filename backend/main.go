@@ -51,8 +51,7 @@ func createTable() {
 	`
 	_, err := db.Exec(sqlStmt)
 	if err != nil {
-		log.Fatalf("%q: %s
-", err, sqlStmt)
+		log.Fatalf("%q: %s", err, sqlStmt)
 	}
 }
 
