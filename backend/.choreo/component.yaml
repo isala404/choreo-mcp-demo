@@ -8,3 +8,7 @@ endpoints:
     type: REST
     networkVisibilities:
       - Public
+dependencies:
+    connectionReferences:
+    - name: connection-backend-defaultdb
+      resourceRef: database:testdbEU/defaultdb

@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -21,7 +22,14 @@ var conn *pgx.Conn
 
 func main() {
 	var err error
-	dbURL := os.Getenv("DATABASE_URL")
+	dbHost := os.Getenv("CHOREO_CONNECTION_BACKEND_DEFAULTDB_HOSTNAME")
+	dbPort := os.Getenv("CHOREO_CONNECTION_BACKEND_DEFAULTDB_PORT")
+	dbUser := os.Getenv("CHOREO_CONNECTION_BACKEND_DEFAULTDB_USERNAME")
+	dbPassword := os.Getenv("CHOREO_CONNECTION_BACKEND_DEFAULTDB_PASSWORD")
+	dbName := os.Getenv("CHOREO_CONNECTION_BACKEND_DEFAULTDB_DATABASENAME")
+
+	dbURL := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", dbUser, dbPassword, dbHost, dbPort, dbName)
+
 	conn, err = pgx.Connect(context.Background(), dbURL)
 	if err != nil {
 		log.Fatalf("Unable to connect to database: %v\n", err)
