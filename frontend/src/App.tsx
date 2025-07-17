@@ -2,7 +2,15 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const API_URL = 'http://localhost:8080/todos';
+declare global {
+  interface Window {
+    configs: {
+      apiUrl: string;
+    };
+  }
+}
+
+const API_URL = window.configs?.apiUrl || 'http://localhost:8080/todos';
 
 // Configure axios to send credentials with every request
 axios.defaults.withCredentials = true;
