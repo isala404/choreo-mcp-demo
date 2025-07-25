@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -21,7 +22,24 @@ var conn *pgx.Conn
 
 func main() {
 	var err error
+	
+	// Construct DATABASE_URL from Choreo connection variables
+	hostname := os.Getenv("CHOREO_CONNECTION_TODO_BACKEND_DEFAULTDB_HOSTNAME")
+	port := os.Getenv("CHOREO_CONNECTION_TODO_BACKEND_DEFAULTDB_PORT")
+	username := os.Getenv("CHOREO_CONNECTION_TODO_BACKEND_DEFAULTDB_USERNAME")
+	password := os.Getenv("CHOREO_CONNECTION_TODO_BACKEND_DEFAULTDB_PASSWORD")
+	database := os.Getenv("CHOREO_CONNECTION_TODO_BACKEND_DEFAULTDB_DATABASENAME")
+	
+	// Fallback to DATABASE_URL if Choreo variables are not available
 	dbURL := os.Getenv("DATABASE_URL")
+	if hostname != "" && port != "" && username != "" && password != "" && database != "" {
+		dbURL = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=require", username, password, hostname, port, database)
+	}
+	
+	if dbURL == "" {
+		log.Fatalf("Database connection string not found. Please set DATABASE_URL or Choreo connection variables.")
+	}
+	
 	conn, err = pgx.Connect(context.Background(), dbURL)
 	if err != nil {
 		log.Fatalf("Unable to connect to database: %v\n", err)

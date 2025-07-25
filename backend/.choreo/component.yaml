@@ -22,3 +22,9 @@ endpoints:
     networkVisibilities: 
       - Public
       - Organization
+
+# +optional Dependencies of the component
+dependencies:
+  connectionReferences:
+    - name: connection-todo-backend-defaultdb
+      resourceRef: database:testdbEU/defaultdb
