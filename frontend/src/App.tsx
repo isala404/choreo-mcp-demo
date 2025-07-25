@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
-const API_URL = import.meta.env.VITE_API_URL || '/api/todos';
+// For Choreo managed auth, use the choreo-apis path
+const API_URL = '/choreo-apis/choreo-mcp-demo/todo-backend/v1.0/todos';
 
 // Configure axios to send credentials with every request
 axios.defaults.withCredentials = true;
